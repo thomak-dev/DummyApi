@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:desktop2="http://schemas.microsoft.com/appx/manifest/desktop/windows10/2"
+  xmlns:desktop6="http://schemas.microsoft.com/appx/manifest/desktop/windows10/6"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap desktop2 desktop6 rescap">
+
+  <Identity
+    Name="7abf92bc-8e32-44bc-b00f-20880267ce02"
+    Publisher="CN=thomak"
+    Version="1.0.9.0" />
+
+  <Properties>
+    <DisplayName>DummyApi</DisplayName>
+    <PublisherDisplayName>thomak</PublisherDisplayName>
+    <Logo>Images\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.14393.0" MaxVersionTested="10.0.14393.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="DummyApi" Executable="$targetnametoken$.exe" EntryPoint="$targetentrypoint$">
+      <uap:VisualElements
+        DisplayName="DummyApi"
+        Description="DummyApi Windows Service"
+        BackgroundColor="transparent"
+        Square150x150Logo="Images\Square150x150Logo.png"
+        Square44x44Logo="Images\Square44x44Logo.png"
+        AppListEntry="none">
+        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png" />
+        <uap:SplashScreen Image="Images\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <desktop6:Extension
+          Category="windows.service"
+          Executable="DummyApi\DummyApi.exe"
+          EntryPoint="Windows.FullTrustApplication">
+          <desktop6:Service
+            Name="DummyApi"
+            StartupType="auto"
+            StartAccount="localService"
+            Arguments="--urls http://localhost:5058" />
+        </desktop6:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Extensions>
+    <desktop2:Extension Category="windows.desktopEventLogging">
+      <desktop2:DesktopEventLogging AppName="DummyApi">
+        <desktop2:EventMessageFiles>
+          <desktop2:File Path="DummyApi\DummyApi.exe" />
+        </desktop2:EventMessageFiles>
+        <desktop2:TypesSupported>
+          <desktop2:TypeSupported Value="EVENTLOG_ERROR_TYPE" />
+          <desktop2:TypeSupported Value="EVENTLOG_WARNING_TYPE" />
+          <desktop2:TypeSupported Value="EVENTLOG_INFORMATION_TYPE" />
+        </desktop2:TypesSupported>
+      </desktop2:DesktopEventLogging>
+    </desktop2:Extension>
+  </Extensions>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <rescap:Capability Name="runFullTrust" />
+    <rescap:Capability Name="packagedServices" />
+  </Capabilities>
+</Package>
